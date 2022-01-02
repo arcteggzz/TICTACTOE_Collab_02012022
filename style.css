@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* font for the whole doc */
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 44px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameBoard {
+  width: 60%;
+  border: solid red;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gameBoard div {
+  width: 33.3%;
+  border: blue solid;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 64px;
+}

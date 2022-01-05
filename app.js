@@ -1,3 +1,6 @@
+const playerFactory = (name, marker) => {
+    return {name, marker}
+}
 
 let counter = 0
 //Selects and creates the array from the divs
@@ -17,35 +20,38 @@ const gameBoardArray = [
     {id : 9, dataValue : ""}
 ]
 
-//Create Player Objects
-let playerOne = new Player("Tega", "X")
-let playerTwo = new Player("Jite", "O")
+//Create Player Objects uisng the Factory function method
+const playerOne = playerFactory("Tega", "X")
+const playerTwo = playerFactory("Jite", "O")
 
-//Class constructor for the player objects
-class Player{
-	constructor(name, marker){
-		this.name = name 
-        this.marker = "marker"
-	}
-}
 
 function getPlayerMove(){
-    counter = updateCounter()
     for (const obj of gameBoardArray) {
         //the first conditional matches the clicked div square to the right object in the array.
         //the second conditional validates the user's move and prevents a user from clicking on a non-empty square.
         if ((obj.id == this.dataset.position) && (this.textContent == "")){
-            obj.dataValue = 'X';     
+            //only increment counter if move is valid
+            counter = updateCounter()
+            if (counter % 2 === 1) {
+                //updates the value of the object in the gameBoardArray
+                obj.dataValue = playerOne.marker
+            } else if (counter % 2 === 0){
+                //updates the value of the object in the gameBoardArray
+                obj.dataValue = playerTwo.marker
+            }     
             break;
         }
     }
+    //update the board based on the updated gameBoardArray
     updateGameBoard()
+    //create a checker function here
 }
 
 function updateGameBoard(){
     squares.map(square => square.textContent = gameBoardArray[square.dataset.position - 1].dataValue)
 }
 
-function updateCounter(counter){
-    return counter++
+function updateCounter(){
+    return counter = counter + 1
 }
+

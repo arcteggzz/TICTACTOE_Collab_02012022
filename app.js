@@ -13,7 +13,6 @@ const startButton = document.querySelector(".content button")
 startButton.addEventListener("click", startGame)
 
 
-
 function startGame(){
     playOneRound(counter)
 }
@@ -36,6 +35,7 @@ function playOneRound(counter){
     //Create Player Objects uisng the Factory function method
     const playerOne = playerFactory("Tega", "X")//Just a random input for player name.
     const playerTwo = playerFactory("Jite", "O")//Just a random input for player name.
+
     
 
     //Selects and creates the array from the divs
@@ -48,6 +48,7 @@ function playOneRound(counter){
     }
 
 
+
 function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, counter){
     //Step one in this function is to get the player move(i.e the clicked square)
     //After getting the player move, we use it to update the game board array.
@@ -56,6 +57,7 @@ function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, co
         //the second conditional validates the user's move and prevents a user from clicking on a non-empty square.
         if ((obj.id == square.dataset.position) && (square.textContent == "")){
             //only increment counter if move is valid
+
             
             // counter = updateCounter(counter)
            //This is where you had your previous counter incremented. This wouldn't work because every time a square is clicked
@@ -66,12 +68,14 @@ function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, co
            //gets the global counter as an argument and not the counter which we incremented in the previous function block.
 
             if (counter % 2 === 1) {  
+
                 //updates the value of the object in the gameBoardArray
                 obj.dataValue = playerOne.marker;
                 updateGameBoard(squares, gameBoardArray);
                 break;
             } else if (counter % 2 === 0){
                 //updates the value of the object in the gameBoardArray
+
                 obj.dataValue = playerTwo.marker;
                 updateGameBoard(squares, gameBoardArray);
                 break;
@@ -80,6 +84,7 @@ function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, co
     }
     //Step3 is where we now display the game board on screen using the updated game board Array from step2.
     //This step 3 is done by the function(updateGameBoard)
+
     
     //create a checker function here
 }
@@ -94,6 +99,7 @@ function updateGameBoard(squares, gameBoardArray){
     //the function runs properly in the initial version. so I don't think there is an error here.
     squares.map(square => square.textContent = gameBoardArray[square.dataset.position - 1].dataValue)
 }
+
 
 
 

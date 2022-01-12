@@ -1,17 +1,11 @@
-//This is the refactored Code. The Idea here was to make my code neater and reduce the scope of Variables.
-//We were just taught function scope and Global Scope in the class before they gave us this project. 
-//So I am trying to introduce this to my code.
-
 //This playerFactory is like the class used to create the player objects.
 const playerFactory = (name, marker) => {
     return {name, marker}
 }
 
-
 let counter = 0
 const startButton = document.querySelector(".content button")
 startButton.addEventListener("click", startGame)
-
 
 function startGame(){
     playOneRound(counter)
@@ -36,18 +30,13 @@ function playOneRound(counter){
     const playerOne = playerFactory("Tega", "X")//Just a random input for player name.
     const playerTwo = playerFactory("Jite", "O")//Just a random input for player name.
 
-    
-
     //Selects and creates the array from the divs
     const squares = Array.from(document.querySelectorAll(".gameBoard div")) 
     squares.forEach(square => square.addEventListener("click", ()=> {
         counter =  updateCounter(counter);
         getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, counter);
     }));
-    
-    }
-
-
+}
 
 function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, counter){
     //Step one in this function is to get the player move(i.e the clicked square)
@@ -56,39 +45,21 @@ function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, co
         //the first conditional matches the clicked div square to the right object in the array.
         //the second conditional validates the user's move and prevents a user from clicking on a non-empty square.
         if ((obj.id == square.dataset.position) && (square.textContent == "")){
-            //only increment counter if move is valid
-
-            
-            // counter = updateCounter(counter)
-           //This is where you had your previous counter incremented. This wouldn't work because every time a square is clicked
-           //Look at the top you will notice that counter parameter is actually getting the counter which was declared in the global scope every time a square is clicked
-           //Looking at what you did before, you passed as an argument and incremented it within the function, yeah counter 
-           //got incremented but only within that function block
-           //Once we click another square, getPlayMove(gameBoardArray, playerOne, playerTwo, square, squares, counter) gets called again, but the counter 
-           //gets the global counter as an argument and not the counter which we incremented in the previous function block.
-
             if (counter % 2 === 1) {  
-
                 //updates the value of the object in the gameBoardArray
                 obj.dataValue = playerOne.marker;
-                updateGameBoard(squares, gameBoardArray);
-                break;
             } else if (counter % 2 === 0){
                 //updates the value of the object in the gameBoardArray
-
                 obj.dataValue = playerTwo.marker;
-                updateGameBoard(squares, gameBoardArray);
-                break;
-            }  
+            }
+            updateGameBoard(squares, gameBoardArray);
+            //create a checker function here
+            if (counter >= 5){
+                findWinner(gameBoardArray, playerOne, playerTwo)
+            }
         }
     }
-    //Step3 is where we now display the game board on screen using the updated game board Array from step2.
-    //This step 3 is done by the function(updateGameBoard)
-
-    
-    //create a checker function here
 }
-
 
 function updateCounter(counter){
     return counter + 1;
@@ -100,6 +71,15 @@ function updateGameBoard(squares, gameBoardArray){
     squares.map(square => square.textContent = gameBoardArray[square.dataset.position - 1].dataValue)
 }
 
-
-
-
+function findWinner(gameBoardArray, playerOne, playerTwo){
+    //create an array of values
+    let dataValueArray = []
+    gameBoardArray.forEach(obj => dataValueArray.push(obj.dataValue));
+    //Draw
+    // if (!dataValueArray.includes("")) { 
+    //     console.log("Draw")
+    // }
+    if (dataValueArray[0] === "O" && dataValueArray[1] === "O" && dataValueArray[2] === "O"){
+        console.log("winner")
+    }
+}

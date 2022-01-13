@@ -55,7 +55,7 @@ function getPlayerMove(gameBoardArray, playerOne, playerTwo, square, squares, co
             updateGameBoard(squares, gameBoardArray);
             //create a checker function here
             if (counter >= 5){
-                findWinner(gameBoardArray, playerOne, playerTwo)
+                findWinner(gameBoardArray)
             }
         }
     }
@@ -71,15 +71,30 @@ function updateGameBoard(squares, gameBoardArray){
     squares.map(square => square.textContent = gameBoardArray[square.dataset.position - 1].dataValue)
 }
 
-function findWinner(gameBoardArray, playerOne, playerTwo){
+function findWinner(gameBoardArray){
     //create an array of values
     let dataValueArray = []
+    //push the values into the array from the gameBoard Object
     gameBoardArray.forEach(obj => dataValueArray.push(obj.dataValue));
     //Draw
     // if (!dataValueArray.includes("")) { 
     //     console.log("Draw")
     // }
-    if (dataValueArray[0] === "O" && dataValueArray[1] === "O" && dataValueArray[2] === "O"){
-        console.log("winner")
+    //Win
+    if (//Horizontal
+        check(0, 1, 2, dataValueArray) || check(3, 4, 5, dataValueArray) || check(6, 7, 8, dataValueArray) ||
+        //Vertical
+        check(0, 3, 6, dataValueArray) || check(1, 4, 7, dataValueArray) || check(2, 5, 8, dataValueArray) ||
+        //Diagonal
+        check(0, 4, 8, dataValueArray) || check(2, 4, 6, dataValueArray)
+        ){
+        console.log("fired")
     }
 }
+
+function check(a, b, c, array){
+    if (array[a] === array[b] && array[b]=== array[c] && array[a]!==""){
+        return true
+    }
+}
+
